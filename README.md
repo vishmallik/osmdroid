@@ -1,3 +1,25 @@
+Note: Added Support for Basic Authentication of WMS Layers
+## Usage: 
+```
+val wmsTileSource = AuthenticatedWMSTileSource(
+    aName = "My WMS Layer",
+    aBaseUrl = arrayOf("https://wms.example.com/wms"),
+    layername = "Test WMS",
+    version = "1.1.1",
+    srs = "EPSG:3857",
+    style = "",
+    size = 256,
+    username = "testUser",
+    password = "pass123"
+)
+
+val tileProvider = MapTileProviderBasic(context)
+tileProvider.setTileSource(wmsTileSource)
+    
+```
+
+
+
 ### osmdroid is now archived and will no longer receive updates or new releases
 
 While the project is now archived, the source code and documentation will remain available for those who wish to explore, fork, or maintain it independently.  

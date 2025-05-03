@@ -3,11 +3,13 @@ package org.osmdroid.tileprovider.modules;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 
 import org.osmdroid.api.IMapView;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
+import org.osmdroid.tileprovider.tilesource.AuthInfoProvider;
 import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourcePolicy;
@@ -27,6 +29,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
@@ -107,6 +110,15 @@ public class TileDownloader {
             c.setRequestProperty(Configuration.getInstance().getUserAgentHttpHeader(), userAgent);
             for (final Map.Entry<String, String> entry : Configuration.getInstance().getAdditionalHttpRequestProperties().entrySet()) {
                 c.setRequestProperty(entry.getKey(), entry.getValue());
+            }
+            if(pTileSource instanceof AuthInfoProvider){
+                AuthInfoProvider auth = (AuthInfoProvider) pTileSource;
+                String credentials = auth.getUsername() + ":" + auth.getPassword();
+                String basicAuth = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    basicAuth = "Basic" + Base64.encodeToString(credentials.getBytes(StandardCharsets.UTF_8),Base64.NO_WRAP);
+                }
+                c.setRequestProperty("Authorization",basicAuth);
             }
             c.connect();
 
