@@ -77,7 +77,7 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
     private BitmapDrawable mLoadingTile = null;
     private int mLoadingBackgroundColor = Color.rgb(216, 208, 208);
     private int mLoadingLineColor = Color.rgb(200, 192, 192);
-
+    private int mTileOpacity = 255;
     private boolean horizontalWrapEnabled = true;
     private boolean verticalWrapEnabled = true;
 
@@ -322,6 +322,7 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 
     protected void onTileReadyToDraw(final Canvas c, final Drawable currentMapTile, final Rect tileRect) {
         currentMapTile.setColorFilter(currentColorFilter);
+        currentMapTile.setAlpha(mTileOpacity);
         currentMapTile.setBounds(tileRect.left, tileRect.top, tileRect.right, tileRect.bottom);
         final Rect canvasRect = getCanvasRect();
         if (canvasRect == null) {
@@ -536,5 +537,11 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
      */
     public TileStates getTileStates() {
         return mTileStates;
+    }
+
+    public void setTileOpacity(float opacity) {
+        mTileOpacity = (int) (opacity * 255); // opacity from 0.0 to 1.0
+        if (mTileOpacity < 0) mTileOpacity = 0;
+        if (mTileOpacity > 255) mTileOpacity = 255;
     }
 }

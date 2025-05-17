@@ -116,7 +116,7 @@ public class TileDownloader {
                 String credentials = auth.getUsername() + ":" + auth.getPassword();
                 String basicAuth = null;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    basicAuth = "Basic" + Base64.encodeToString(credentials.getBytes(StandardCharsets.UTF_8),Base64.NO_WRAP);
+                    basicAuth = "Basic " + Base64.encodeToString(credentials.getBytes(StandardCharsets.UTF_8),Base64.NO_WRAP);
                 }
                 c.setRequestProperty("Authorization",basicAuth);
             }
