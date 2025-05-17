@@ -1,6 +1,7 @@
-Note: Added Support for Basic Authentication of WMS Layers
+Note: Added Support for Basic Authentication of WMS Layers and Opacity Control
 ## Usage: 
 ```
+//Basic Auth
 val wmsTileSource = AuthenticatedWMSTileSource(
     aName = "My WMS Layer",
     aBaseUrl = arrayOf("https://wms.example.com/wms"),
@@ -14,8 +15,12 @@ val wmsTileSource = AuthenticatedWMSTileSource(
 )
 
 val tileProvider = MapTileProviderBasic(context)
-tileProvider.setTileSource(wmsTileSource)
-    
+tileProvider.tileSource = wmsTileSource
+val wmsOverlay = TilesOverlay(tileProvider,context)
+mapView.overlayManager.add(wmsOverlay)
+
+//Opacity control
+wmsOverlay.setTileOpacity(1.0f) //0 from tranparent and 1 for opaque
 ```
 
 
