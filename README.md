@@ -20,7 +20,7 @@ val wmsOverlay = TilesOverlay(tileProvider,context)
 mapView.overlayManager.add(wmsOverlay)
 
 //Opacity control
-wmsOverlay.setTileOpacity(1.0f) //0 from tranparent and 1 for opaque
+wmsOverlay.setTileOpacity(1.0f) //0 for tranparent and 1 for opaque
 ```
 
 
